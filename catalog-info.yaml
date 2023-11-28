@@ -1,0 +1,43 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: FlaskAppTest
+  description: test
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    jenkins.io/job-full-name: FlaskAppTest
+    backstage.io/kubernetes-id: flaskapptest
+    ubilityai.com/svc: public
+    ubilityai.com/cluster-name: openopstestcluster
+    ubilityai.com/deleted: no
+spec:
+  type: service
+  lifecycle: development
+  owner: group:default/test
+  subcomponentOf: openopstestcluster
+  providesApis: [FlaskAppTest-hello_world]
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: FlaskAppTest-hello_world
+  description: Return hello world
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:default/test
+  system: test
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Hello World
+      license:
+        name: MIT
+    servers:
+      - url: http://backstage.ubilityai.com
+    paths:
+      /app:
+        get:
+          summary: Returns Hello World

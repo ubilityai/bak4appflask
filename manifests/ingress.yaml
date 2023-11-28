@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: nginx
+  generation: 1
+  name: ingress-flaskapptest
+  namespace: default
+spec:
+  rules:
+    - host: backstage.ubilityai.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: flaskapptest
+                port:
+                  number: 80
+            path: /app
+            pathType: Prefix
+  tls:
+    - hosts:
+        - backstage.ubilityai.com
+      secretName: flaskapptest-secret
+status:
+  loadBalancer:
+    ingress:
+      - ip: 20.228.236.214

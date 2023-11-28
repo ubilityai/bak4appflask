@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: flaskapptest
+    backstage.io/kubernetes-id: flaskapptest
+  name: flaskapptest
+  namespace: default
+spec:
+  clusterIP: 10.0.214.182
+  clusterIPs:
+    - 10.0.214.182
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - port: 80
+      name: default
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    app: flaskapptest
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
